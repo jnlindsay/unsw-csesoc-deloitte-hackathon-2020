@@ -3,7 +3,7 @@ from flask import request, render_template, url_for, redirect
 
 ''' Import functions'''
 from application import app
-from application.models import Task
+from application.models import Task, Covid, Country
 from application.functions.task_funcs import tasks
 
 from application import db
@@ -55,6 +55,46 @@ def city_sydney():
 @app.route('/city/sao-paulo')    
 def city_sao_paulo():
     return render_template('city_sao-paulo.html')
+
+
+@app.route('/admin', methods=['POST', 'GET'])
+def admin():
+    if request.method == "POST":
+        data = request.form
+        print(data)
+        
+        country = data.get('country')
+        date_str = data.get('date')
+        num_cases = data.get('num_cases')
+ 
+
+        # find country in database and get country id
+        country_data = Country.query.filter_by(name=country).all()
+        
+        if country_data is None:
+            return "invalid country "
+        country_id = country_data[0].id
+        date_created = datetime.strptime(date_str, '%Y-%m-%d').date()
+        print(date_created)
+        new_covid = Covid(country_id=country_id, date_created=date_created, num_cases=num_cases)
+        try:
+            db.session.add(new_covid)
+
+            db.session.commit()
+
+            return redirect('/admin')
+        except:
+            print(new_covid.country_id, date_created, num_cases)
+            return "There was an issue assing your task"
+
+    else:
+        print("get")
+
+        covid = Covid.query.filter_by().all()
+        print(covid)
+        return render_template('admin.html', covid=covid)
+    return render_template('admin.html')
+
 
 #######################################################
 
