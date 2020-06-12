@@ -11,6 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
     <style>
         a {
             color: white
@@ -34,6 +35,10 @@
                 x.style.display = "none";
             }
         }
+
+        function returnData(vars) {
+            return vars
+        }
     </script>
     {% block head %}{% endblock %}
 </head>
@@ -52,7 +57,7 @@
     </div>
 </body>
 
-<footer style="text-align: center; bottom: 0; position: fixed; padding: 20px; width: 100%; background: transparent; color: lightgray">
+<footer style="text-align: center; bottom: 0; padding: 20px; width: 100%; background: transparent; color: lightgray">
     <strong>The Loiterers</strong>
     <br>
     Harrison Bradley, Lily Chen, Adam Ma, Jeremy Lindsay
