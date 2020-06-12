@@ -25,12 +25,23 @@ def home():
         'population': 123456789,
         'covid_19_cases': 12345,
     }
+
+
     if request.method == "GET":
         try:
             return render_template('home.html', data=data)
         except:
             return "There was an issue loading the page."
+
     elif request.method == "POST":
+
+        data = request.form
+        country = data.country
+        
+
+
+
+
         print("Redirected with the following"
                 "request data: " + request.form['content'])
         try:
@@ -59,30 +70,28 @@ def city_sao_paulo():
 def admin():
     if request.method == "POST":
         data = request.form
-        print(data)
-        
         country = data.get('country')
         date_str = data.get('date')
         num_cases = data.get('num_cases')
- 
-
         # find country in database and get country id
         country_data = Country.query.filter_by(name=country).all()
-        
-        if country_data is None:
-            return "invalid country "
-        country_id = country_data[0].id
+
+        if country_data is []:
+            return "invalid country"
+        try:
+            country_id = country_data[0].id
+        except IndexError:
+            return "invalid country"
+
+
         date_created = datetime.strptime(date_str, '%Y-%m-%d').date()
         print(date_created)
         new_covid = Covid(country_id=country_id, date_created=date_created, num_cases=num_cases)
         try:
             db.session.add(new_covid)
-
             db.session.commit()
-
             return redirect('/admin')
         except:
-            print(new_covid.country_id, date_created, num_cases)
             return "There was an issue assing your task"
 
     else:
