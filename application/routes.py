@@ -3,7 +3,7 @@ from flask import request, render_template, url_for, redirect
 
 ''' Import functions'''
 from application import app
-from application.models import Task, Covid, Country
+from application.models import Task, Covid, Suburb
 from application.functions.task_funcs import tasks
 
 from application import db
@@ -21,30 +21,58 @@ def home():
     # dummy data structure; will be implemented in database
     data = {
         'successful_result': True,
-        'country': 'Country Name',
+        'suburb': 'suburb Name',
         'population': 123456789,
         'covid_19_cases': 12345,
     }
     if request.method == "GET":
         try:
-            return render_template('home.html', data=data)
+            return render_template('home.html', empty=-1)
         except:
             return "There was an issue loading the page."
     elif request.method == "POST":
+        sum = -1 
+        data = request.form
+        print(data)
+        suburb = data.get('suburb')
+        suburb_data = Suburb.query.filter_by(name=suburb).first()
+        print(suburb_data)
+        if suburb_data is None:
+            return render_template('home.html', suburb_name=suburb, empty = 0)
+        
+        print(suburb_data.id)
+
+        # get all data related to given suburb
+        all_data = Covid.query.filter_by(suburb_id=suburb_data.id).order_by(Covid.date_created).all()
+        # Get most recent data
+        recent_data = all_data[:14]
+        # calculate sum of recent data
+        sum = 0
+        dates = []
+        for i in recent_data:
+            dates.append(i.date_created.date())
+            sum += i.num_cases
+
+        print(sum, dates)
+
+        # pick most recent five
+        return render_template('home.html', sum=sum, suburb_name=suburb, empty=1)
+        '''
         print("Redirected with the following"
-                "request data: " + request.form['content'])
+                "request data: " + request.form['suburb'])
         try:
             return redirect('/')
         except:
             return "There was an issue with the POST request."
+        '''
 
-@app.route('/country/australia')
-def country_australia():
-    return render_template('country_australia.html')
+@app.route('/suburb/australia')
+def suburb_australia():
+    return render_template('suburb_australia.html')
 
-@app.route('/country/brazil')    
-def country_brazil():
-    return render_template('country_brazil.html')
+@app.route('/suburb/brazil')    
+def suburb_brazil():
+    return render_template('suburb_brazil.html')
 
 @app.route('/city/sydney')    
 def city_sydney():
@@ -59,30 +87,26 @@ def city_sao_paulo():
 def admin():
     if request.method == "POST":
         data = request.form
-        print(data)
-        
-        country = data.get('country')
+        suburb = data.get('suburb')
         date_str = data.get('date')
         num_cases = data.get('num_cases')
- 
-
-        # find country in database and get country id
-        country_data = Country.query.filter_by(name=country).all()
+        # find suburb in database and get suburb id
+        suburb_data = Suburb.query.filter_by(name=suburb).all()
+        if suburb_data is None:
+            return "invalid suburb "
+        try:
+            suburb_id = suburb_data[0].id
+        except IndexError:
+            return "invalid suburb"
         
-        if country_data is None:
-            return "invalid country "
-        country_id = country_data[0].id
         date_created = datetime.strptime(date_str, '%Y-%m-%d').date()
-        print(date_created)
-        new_covid = Covid(country_id=country_id, date_created=date_created, num_cases=num_cases)
+        new_covid = Covid(suburb_id=suburb_id, date_created=date_created, num_cases=num_cases)
         try:
             db.session.add(new_covid)
-
             db.session.commit()
-
             return redirect('/admin')
         except:
-            print(new_covid.country_id, date_created, num_cases)
+            print(new_covid.suburb_id, date_created, num_cases)
             return "There was an issue assing your task"
 
     else:
@@ -91,6 +115,7 @@ def admin():
         covid = Covid.query.filter_by().all()
         print(covid)
         return render_template('admin.html', covid=covid)
+
     return render_template('admin.html')
 
 

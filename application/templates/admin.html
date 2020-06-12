@@ -5,7 +5,7 @@
 
 <div class="form">
     <form action="/admin" method="POST">
-        Country <input type="text" name="country" id='country'> <br>
+        Country <input type="text" name="suburb" id='suburb'> <br>
         Date added <input type="date" name="date" id='date'> <br>
         New Cases <input type="number" name="num_cases" id='num_cases'> <br>
         <input type="submit" value="Add Data">
@@ -24,7 +24,7 @@
         </tr>
         {% for c in covid %}
             <tr>
-                <td>{{ c.country.name }}  </td>
+                <td>{{ c.suburb.name }}  </td>
                 <td>{{ c.date_created.date() }}  </td>
                 <td>{{ c.num_cases }}  </td>
                 <td><
