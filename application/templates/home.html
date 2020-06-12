@@ -4,16 +4,19 @@
 <title>Health Risks</title>
 {% endblock %}
 
-Things
-
 {% block body %}
-<div class="content">
-    <h1 style="text-align: center"><a href="/healthrisks">Health Risks</a></h1>
-    <h2>Locations</h2>
-    <ul>
-        <li>São Paulo, Brazil</li>
-        <li>Auckland, New Zealand</li>
-    </ul>
+<div class="container">
+    <h2 style="text-align: center">lololol welcome to our website <3</h2>
+    <h2>Select Country</h2>
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Select country
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="/country/australia">Australia</a>
+            <a class="dropdown-item" href="/country/brazil">Brazil</a>
+        </div>
+      </div>      
 </div>
 {% endblock %}
 

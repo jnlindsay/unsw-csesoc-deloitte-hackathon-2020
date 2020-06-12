@@ -16,6 +16,14 @@ from application import db
 def home():
     return render_template('home.html')
 
+@app.route('/country/australia')
+def country_australia():
+    return render_template('country_australia.html')
+
+@app.route('/country/brazil')    
+def country_brazil():
+    return render_template('country_brazil.html')
+
 #######################################################
 
 # @app.route('/task', methods=['POST', 'GET'])
