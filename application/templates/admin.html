@@ -3,15 +3,38 @@
 {% block body %}
 <title>admin</title>
 
-
 <div class="form">
-    <form action="/add" method="POST">
-        Country <input type="text" name="content" id='content'> <br>
-        Date added <input type="text" name="content" id='content'> <br>
-        New Cases <input type="text" name="content" id='content'> <br>
+    <form action="/admin" method="POST">
+        Country <input type="text" name="country" id='country'> <br>
+        Date added <input type="date" name="date" id='date'> <br>
+        New Cases <input type="number" name="num_cases" id='num_cases'> <br>
         <input type="submit" value="Add Data">
     </form>
 </div>
+
+    {% if covid | length < 1 %}
+    {% else %}
+    <h2 style="text-align: center">New added data</h2>
+    <table style="margin-left:auto; margin-right:auto;">
+        <tr>
+            <th>Country</th>
+            <th>Date</th>
+            <th>New Cases</th>
+            <th>Actions</th>
+        </tr>
+        {% for c in covid %}
+            <tr>
+                <td>{{ c.country.name }}</td>
+                <td>{{ c.date_created.date() }}</td>
+                <td>{{ c.num_cases }}</td>
+                <td><
+                    <a href="">Delete</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+
 {% endblock %}
 
 
