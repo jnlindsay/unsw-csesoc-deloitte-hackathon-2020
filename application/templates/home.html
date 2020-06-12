@@ -5,32 +5,20 @@
 {% endblock %}
 
 {% block body %}
+
 <div class="container">
-    <p style="text-align: center">lololol welcome to our website <3</p>
-    
-    <!-- <h2>Select Country</h2>
-    <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Select country
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="/country/australia">Australia</a>
-            <a class="dropdown-item" href="/country/brazil">Brazil</a>
-        </div>        
-    </div> -->
 
     <div style="text-align: center;">
-        <h2>Search</h2>
         <div class="form">
-            <form action="/" method="POST">
-                <input type="text" name="country" id='country'>
-                <br>
-                <br>
+            <form action="/" method="POST" >
+                <input type="text" name="content" id='content' style="width: 500px;">
+
                 <input type="submit" value="Search">
             </form>
         </div>
     </div>
 
+    <div style="padding-top: 50px;">
     {% if data.successful_result %}
         <h2>Country: {{ data.country }}</h2>
         <ul>
@@ -38,6 +26,7 @@
             <li>No. COVID-19 cases: {{ data.covid_19_cases }}</li>
         </ul>
     {% endif %}
+    </div>
 
 
 
