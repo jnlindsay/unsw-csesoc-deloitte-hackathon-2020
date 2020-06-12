@@ -39,12 +39,11 @@
                     <h1 style="color:red">NO</h1>
                 {% endif %}
                 <ul>
-                    <li>{{lables}} {{data}}</li>
+                    <li>{{ labels }} {{ data }}</li>
                     <li></li>
                 </ul>
             {% endif %}
         </div>
-    
 
         <canvas id="line-chart" width="800" height="450"></canvas>
         <script>
@@ -54,16 +53,17 @@
                 data: {
                     labels: [1,2,3,4,5,6],
                     datasets: [{ 
-                        data: '{{ data }}',
-                        label: '{{ suburb_name }}',
+                        lineTension: 0,
+                        data: {{ data | tojson }},
+                        label: {{ suburb_name }},
                         borderColor: 'pink',
                         fill: false
                     }]
                 },
                 options: {
                     title: {
-                    display: true,
-                    text: 'COVID-19 cases in {{ suburb_name }}'
+                        display: true,
+                        text: 'COVID-19 cases in {{ suburb_name }}'
                     }
                 }
             });

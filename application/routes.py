@@ -34,23 +34,21 @@ def home():
             return "There was an issue loading the page."
 
     elif request.method == "POST":
+        
         data = request.form
-        print(data)
         suburb = data.get('suburb')
         suburb_data = Suburb.query.filter_by(name=suburb).first()
         print(suburb_data)
         if suburb_data is None:
             return render_template('home.html', suburb_name=suburb, empty = 0)
         
-        print(suburb_data.id)
-
         # get all data related to given suburb
         all_data = Covid.query.filter_by(suburb_id=suburb_data.id).order_by(Covid.date_created).all()
         # Get most recent data
         recent_data = all_data[:14]
 
         #turn data into day/month 
-
+        
 
 
 
@@ -64,10 +62,8 @@ def home():
             dates.append(string)
             sum += i.num_cases
 
-        print(sum, dates, data)
-        print(json.dumps(dates))
         # pick most recent five
-        return render_template('home.html', sum=sum, suburb_name=suburb, empty=1, lables=dates, data=data)
+        return render_template('home.html', sum=sum, suburb_name=suburb, empty=1, labels=dates, data=data)
         '''
 
         print("Redirected with the following"
