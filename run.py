@@ -12,7 +12,5 @@ class Todo(db.Model):
         return '<Task %r>' % self.id
  '''
 
-
-
 if __name__ == '__main__':
     app.run(debug=True)
