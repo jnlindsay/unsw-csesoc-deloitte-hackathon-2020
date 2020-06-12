@@ -1,2 +1,2 @@
 # hackathon-deloitte-2020
-UNSW CSE Hackathon Deloitte 2020
+UNSW CSESoc Hackathon Deloitte 2020
