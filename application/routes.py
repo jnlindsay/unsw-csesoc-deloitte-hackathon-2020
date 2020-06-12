@@ -36,6 +36,12 @@ def city_sydney():
 def city_sao_paulo():
     return render_template('city_sao-paulo.html')
 
+
+@app.route('/admin')
+def admin():
+    return render_template('admin.html')
+
+
 #######################################################
 
 # @app.route('/task', methods=['POST', 'GET'])
