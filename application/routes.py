@@ -24,6 +24,14 @@ def country_australia():
 def country_brazil():
     return render_template('country_brazil.html')
 
+@app.route('/city/sydney')    
+def city_sydney():
+    return render_template('city_sydney.html')
+
+@app.route('/city/sao-paulo')    
+def city_sao_paulo():
+    return render_template('city_sao-paulo.html')
+
 #######################################################
 
 # @app.route('/task', methods=['POST', 'GET'])

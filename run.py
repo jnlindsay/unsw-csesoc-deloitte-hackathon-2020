@@ -1,5 +1,4 @@
 
-
 from application import app
 '''
 class Todo(db.Model):
