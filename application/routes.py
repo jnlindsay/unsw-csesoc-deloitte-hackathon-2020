@@ -18,7 +18,6 @@ def search():
 
 @app.route('/', methods=['POST', 'GET'])
 def home():
-
     # dummy data structure; will be implemented in database
     data = {
         'successful_result': True,
@@ -26,7 +25,6 @@ def home():
         'population': 123456789,
         'covid_19_cases': 12345,
     }
-
     if request.method == "GET":
         try:
             return render_template('home.html', data=data)
