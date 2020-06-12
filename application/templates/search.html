@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+<style>
+    .form {
+        margin: 0 auto;
+    }
+</style>
+
+
+
+{% block head %}
+<title>Search</title>
+{% endblock %}
+
+{% block body %}
+<div class="form">
+    <form action="/task" method="POST">
+        <input type="text" name="content" id='content'>
+        <br>
+        <input type="submit" value="Search">
+    </form>
+</div>
+{% endblock %}

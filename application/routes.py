@@ -12,6 +12,10 @@ from application import db
 #                  HEALTH RISKS                       #
 #######################################################
 
+@app.route('/search')
+def search():
+    return render_template('search.html')
+
 @app.route('/')
 def home():
     return render_template('home.html')
