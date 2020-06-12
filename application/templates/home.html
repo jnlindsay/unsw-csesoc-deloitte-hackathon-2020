@@ -2,11 +2,12 @@
 
 {% block head %}
 <title>Where can I go?</title>
+
+
 {% endblock %}
 
 {% block body %}
-
-<div class="container">
+<div class="container" styles="height: 100%">
 
     <div style="text-align: center;">
         <div class="form">
@@ -47,9 +48,30 @@
         </div>
     {% endif %}
 
+    <canvas id="line-chart" width="800" height="450"></canvas>
+    <script>
+        Chart.defaults.global.defaultFontColor = 'white';
+        new Chart(document.getElementById("line-chart"), {
+            type: 'line',
+            data: {
+                labels: ['Jan','Feb','March','April','May','June'],
+                datasets: [{ 
+                    data: [86,114,106,106,107,111],
+                    label: '{{ data.country }}',
+                    borderColor: 'pink',
+                    fill: false
+                }]
+            },
+            options: {
+                title: {
+                display: true,
+                text: 'COVID-19 cases'
+                }
+            }
+        });
+    </script>
+    </div>    
 
-
-    
 </div>
 {% endblock %}
 

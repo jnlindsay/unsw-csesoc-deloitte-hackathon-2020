@@ -25,11 +25,14 @@ def home():
         'population': 123456789,
         'covid_19_cases': 12345,
     }
+
+
     if request.method == "GET":
         try:
             return render_template('home.html', empty=-1)
         except:
             return "There was an issue loading the page."
+
     elif request.method == "POST":
         sum = -1 
         data = request.form
@@ -58,6 +61,7 @@ def home():
         # pick most recent five
         return render_template('home.html', sum=sum, suburb_name=suburb, empty=1)
         '''
+
         print("Redirected with the following"
                 "request data: " + request.form['suburb'])
         try:
@@ -87,6 +91,7 @@ def city_sao_paulo():
 def admin():
     if request.method == "POST":
         data = request.form
+<<<<<<< HEAD
         suburb = data.get('suburb')
         date_str = data.get('date')
         num_cases = data.get('num_cases')
@@ -99,6 +104,7 @@ def admin():
         except IndexError:
             return "invalid suburb"
         
+
         date_created = datetime.strptime(date_str, '%Y-%m-%d').date()
         new_covid = Covid(suburb_id=suburb_id, date_created=date_created, num_cases=num_cases)
         try:
@@ -107,6 +113,7 @@ def admin():
             return redirect('/admin')
         except:
             print(new_covid.suburb_id, date_created, num_cases)
+
             return "There was an issue assing your task"
 
     else:
