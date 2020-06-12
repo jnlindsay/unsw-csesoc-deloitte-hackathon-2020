@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<title>admin- add suburb</title>
+
+<div class="form">
+    <form action="/suburb" method="POST">
+        New Suburb <input type="text" name="suburb" id='suburb'> <br>
+        <input type="submit" value="Add Data">
+    </form>
+</div>
+
+    {% if suburb| length < 1 %}
+    {% else %}
+    <h2 style="text-align: center">New added data</h2>
+    <table style="margin-left:auto; margin-right:auto;">
+        <tr>
+            <th>Suburbs</th>
+            <th>Actions</th>
+        </tr>
+        {% for c in suburb %}
+            <tr>
+                <td>{{ c.name }}  </td>
+                <td>
+                    <a href="">Delete</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    <a href="/admin">Add a case data here</a>
+    {% endif %}
+
+{% endblock %}
