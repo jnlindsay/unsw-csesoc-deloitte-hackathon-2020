@@ -105,12 +105,11 @@ def admin():
         # find suburb in database and get suburb id
         suburb_data = Suburb.query.filter_by(name=suburb).all()
         if suburb_data is None:
-            return "invalid suburb "
+            return "invalid suburb or suburb doesnt exist"
         try:
             suburb_id = suburb_data[0].id
         except IndexError:
-            return "invalid suburb"
-        
+            return "invalid suburb or suburb doesnt exist"
 
         date_created = datetime.strptime(date_str, '%Y-%m-%d').date()
         new_covid = Covid(suburb_id=suburb_id, date_created=date_created, num_cases=num_cases)
@@ -122,15 +121,38 @@ def admin():
             print(new_covid.suburb_id, date_created, num_cases)
 
             return "There was an issue assing your task"
-
     else:
         print("get")
 
         covid = Covid.query.filter_by().all()
+        suburb = Suburb.query.filter_by().all()
         print(covid)
-        return render_template('admin.html', covid=covid)
+        return render_template('admin.html', covid=covid, suburb=suburb)
 
     return render_template('admin.html')
+
+@app.route('/suburb', methods=['POST', 'GET'])
+def suburb():
+    if request.method == "POST":
+        data = request.form
+        suburb = data.get('suburb')
+
+        suburb_data = Suburb.query.filter_by(name=suburb).first()
+        if suburb_data is not None:
+            return "this suburb already exists"
+    
+        new_suburb = Suburb(name=suburb)
+        try:
+            db.session.add(new_suburb)
+            db.session.commit()
+            return redirect('/suburb')
+        except:
+            print(new_covid.suburb_id, date_created, num_cases)
+            return "There was an issue assing your task"
+    else:
+        print("get")
+        suburb = Suburb.query.filter_by().all()
+        return render_template('suburb.html', suburb=suburb)
 
 
 #######################################################

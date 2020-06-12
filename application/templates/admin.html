@@ -5,7 +5,7 @@
 
 <div class="form">
     <form action="/admin" method="POST">
-        Country <input type="text" name="suburb" id='suburb'> <br>
+        Suburb <input type="text" name="suburb" id='suburb'> <br>
         Date added <input type="date" name="date" id='date'> <br>
         New Cases <input type="number" name="num_cases" id='num_cases'> <br>
         <input type="submit" value="Add Data">
@@ -14,25 +14,38 @@
 
     {% if covid | length < 1 %}
     {% else %}
-    <h2 style="text-align: center">New added data</h2>
+    <h2 style="text-align: center">New Cases</h2>
     <table style="margin-left:auto; margin-right:auto;">
         <tr>
-            <th>Country</th>
+            <th>Suburb</th>
             <th>Date</th>
             <th>New Cases</th>
-            <th>Actions</th>
         </tr>
         {% for c in covid %}
             <tr>
                 <td>{{ c.suburb.name }}  </td>
                 <td>{{ c.date_created.date() }}  </td>
                 <td>{{ c.num_cases }}  </td>
-                <td><
-                    <a href="">Delete</a>
-                </td>
             </tr>
         {% endfor %}
     </table>
+    {% endif %}
+
+    {% if suburb | length < 1 %}
+        <h2 style="text-align: center">No suburbs</h2>
+    {% else %}
+    <h2 style="text-align: center">Suburbs</h2>
+    <table style="margin-left:auto; margin-right:auto;">
+        <tr>
+            <th>Suburbs</th>
+        </tr>
+        {% for s in suburb %}
+            <tr>
+                <td>{{ s.name }}  </td>
+            </tr>
+        {% endfor %}
+    </table>
+    <a href="/suburb">Add a new suburb here</a>
     {% endif %}
 
 {% endblock %}
