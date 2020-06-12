@@ -16,9 +16,29 @@ from application import db
 def search():
     return render_template('search.html')
 
-@app.route('/')
+@app.route('/', methods=['POST', 'GET'])
 def home():
-    return render_template('home.html')
+
+    # dummy data structure; will be implemented in database
+    data = {
+        'successful_result': True,
+        'country': 'Country Name',
+        'population': 123456789,
+        'covid_19_cases': 12345,
+    }
+
+    if request.method == "GET":
+        try:
+            return render_template('home.html', data=data)
+        except:
+            return "There was an issue loading the page."
+    elif request.method == "POST":
+        print("Redirected with the following"
+                "request data: " + request.form['content'])
+        try:
+            return redirect('/')
+        except:
+            return "There was an issue with the POST request."
 
 @app.route('/country/australia')
 def country_australia():
