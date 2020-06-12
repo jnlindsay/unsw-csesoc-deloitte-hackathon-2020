@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import request, render_template, url_for, redirect
+from flask import request, render_template, url_for, redirect, json
 
 ''' Import functions'''
 from application import app
@@ -34,7 +34,6 @@ def home():
             return "There was an issue loading the page."
 
     elif request.method == "POST":
-        sum = -1 
         data = request.form
         print(data)
         suburb = data.get('suburb')
@@ -49,17 +48,26 @@ def home():
         all_data = Covid.query.filter_by(suburb_id=suburb_data.id).order_by(Covid.date_created).all()
         # Get most recent data
         recent_data = all_data[:14]
+
+        #turn data into day/month 
+
+
+
+
         # calculate sum of recent data
         sum = 0
         dates = []
+        data = []
         for i in recent_data:
-            dates.append(i.date_created.date())
+            string = i.date_created.date().strftime("%d/%m")
+            data.append(i.num_cases)
+            dates.append(string)
             sum += i.num_cases
 
-        print(sum, dates)
-
+        print(sum, dates, data)
+        print(json.dumps(dates))
         # pick most recent five
-        return render_template('home.html', sum=sum, suburb_name=suburb, empty=1)
+        return render_template('home.html', sum=sum, suburb_name=suburb, empty=1, lables=dates, data=data)
         '''
 
         print("Redirected with the following"
@@ -91,7 +99,6 @@ def city_sao_paulo():
 def admin():
     if request.method == "POST":
         data = request.form
-<<<<<<< HEAD
         suburb = data.get('suburb')
         date_str = data.get('date')
         num_cases = data.get('num_cases')
