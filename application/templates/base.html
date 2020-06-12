@@ -1,0 +1,26 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content='ie=edge'>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css')}}">
+    {% block head %}{% endblock %}
+</head>
+<body>
+    {% block body %}{% endblock %}
+</body>
+
+
+<footer style="text-align: center">
+    Made by Adam Ma with ♥ @adammbq 
+    <a href="/about">About</a>
+    |
+    <a href="/"> Home</a>
+    |
+    <a href="https://www.linkedin.com/in/boqian-m-059b9b11a/"> LinkedIn</a>
+    {% block footer %}{% endblock %}
+</footer>
+
+</html>

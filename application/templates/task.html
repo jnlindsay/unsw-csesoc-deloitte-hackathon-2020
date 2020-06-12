@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block head %}
+<title>Tasks</title>
+{% endblock %}
+
+{% block body %}
+<div class="content">
+    <h1 style="text-align: center">Task Master</h1>
+    {% if u_tasks|length < 1 %}
+    <h4 style="text-align: center">There are no tasks. Why don't you create one</h4>
+    {% else %}
+    <h2 style="text-align: center">Uncompleted Tasks</h2>
+    <!-- uncompleted tasks -->
+    <table style="margin-left:auto; margin-right:auto;">
+        <tr>
+            <th>Task</th>
+            <th>Added</th>
+            <th>Actions</th>
+        </tr>
+        {% for task in u_tasks %}
+            <tr>
+                <td>{{ task.content }}</td>
+                <td>{{ task.date_created.date() }}</td>
+                <td>
+                    <a href="/task/delete/{{ task.id }}">Delete</a>
+                    <br>
+                    <a href="/task/update/{{ task.id }}">Update</a>
+                    <br>
+                    <a href="/task/complete/{{ task.id }}">Complete</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+    <div class="form">
+        <form action="/task" method="POST">
+            <input type="text" name="content" id='content'>
+            <input type="submit" value="Add Task">
+        </form>
+    </div>
+    <br>
+    <!-- completed task table -->
+    {% if c_tasks|length < 1 %}
+
+    {% else %}
+    <h2 style="text-align: center">Completed Tasks</h2>
+    <table style="margin-left:auto; margin-right:auto;">
+        <tr>
+            <th>Task</th>
+            <th>Added</th>
+            <th>Actions</th>
+        </tr>
+        {% for task in c_tasks %}
+            <tr>
+                <td>{{ task.content }}</td>
+                <td>{{ task.date_created.date() }}</td>
+                <td>
+                    <a href="/task/delete/{{ task.id }}">Delete</a>
+                    <br>
+                    <a href="/task/update/{{ task.id }}">Update</a>
+                    <br>
+                    <a href="/task/uncomplete/{{ task.id }}">Uncomplete</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+
+</div>
+{% endblock %}
