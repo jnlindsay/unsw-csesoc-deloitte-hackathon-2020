@@ -18,14 +18,6 @@ def search():
 
 @app.route('/', methods=['POST', 'GET'])
 def home():
-    # dummy data structure; will be implemented in database
-    data = {
-        'successful_result': True,
-        'suburb': 'suburb Name',
-        'population': 123456789,
-        'covid_19_cases': 12345,
-    }
-
 
     if request.method == "GET":
         try:
@@ -48,7 +40,7 @@ def home():
         recent_data = all_data[:14]
 
         #turn data into day/month 
-        
+
 
 
 
@@ -62,8 +54,12 @@ def home():
             dates.append(string)
             sum += i.num_cases
 
-        # pick most recent five
-        return render_template('home.html', sum=sum, suburb_name=suburb, empty=1, labels=dates, data=data)
+        population = {
+            'bondi': 15000,
+            'maroubra': 31000
+        }
+        rate = "{0:.4%}".format(sum / population['bondi'])
+        return render_template('home.html', sum=sum, suburb_name=suburb.title(), empty=1, labels=dates, data=data, rate=rate)
         '''
 
         print("Redirected with the following"

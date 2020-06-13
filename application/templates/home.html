@@ -28,20 +28,23 @@
 
     {% else %}
         <div style="padding-top: 50px;">
-            {% if sum == 0 %}
-                <h2>Suburb: {{ suburb_name }} has no new cases in the past 14 days</h2>
-            {% endif %}
-            {% if sum > 0 %}
-                <h2>Suburb: {{ suburb_name }}</h2>
-                <h4>Total new cases in the past 14 days: {{ sum }}</h4>
-
-                {% if sum > 5 %}
-                    <h1 style="color:red">NO</h1>
-                {% endif %}
-                <ul>
-                    <li>{{ labels }} {{ data }}</li>
-                    <li></li>
-                </ul>
+            {% if sum >= 0 %}
+                <h2>Area: {{ suburb_name }}</h2>
+                <p>Rate of infection by COVID-19 in the past 14 days:</p>
+                    <ul>
+                        <li>Nationwide: 0.0004%</li>
+                        <li>{{ suburb_name }}: {{ rate }}</li>
+                    </ul>
+                    <div style="text-align: center; padding: 20px;">
+                        <h3>Chance of Infection:</h3>
+                        {% if suburb_name == 'Bondi' %}
+                            <h2>SOMEWHAT LIKELY <span style="color: orange">&#x25bc;</span></h2>
+                        {% endif %}
+                        {% if suburb_name == 'Bomaderry' %}
+                            <h2>HIGHLY UNLIKELY <span style="color: green">&#x25b2;</span></h2>
+                        {% endif %} 
+                        </h3>
+                    </div>
             {% endif %}
         </div>
 
@@ -51,16 +54,24 @@
             new Chart(document.getElementById("line-chart"), {
                 type: 'line',
                 data: {
-                    labels: [1,2,3,4,5,6],
+                    labels: ['May 31', 'Jun 1', 'Jun 2', 'Jun 3', 'Jun 4', 'Jun 5', 'Jun 6', 'Jun 7', 
+                             'Jun 8' ,'Jun 9', 'Jun 10', 'Jun 11', 'Jun 12','Jun 13'],
                     datasets: [{ 
                         lineTension: 0,
                         data: {{ data | tojson }},
-                        label: {{ suburb_name }},
+                        label: '{{ suburb_name }}',
                         borderColor: 'pink',
                         fill: false
                     }]
                 },
                 options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    },
                     title: {
                         display: true,
                         text: 'COVID-19 cases in {{ suburb_name }}'
